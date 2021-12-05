@@ -471,6 +471,175 @@ def solution_741():  # +
         file.write(f"{s[-1][0]} {s[-1][1]}")
 
 
+def solution_881():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        n, a, b = int(data[0]), int(data[1]), int(data[2])
+        c = True
+        for i in range(n // a + 1):
+            if not (n - a * i) % b and c:
+                file.write(f"YES\n{i} {(n - a * i) // b}")
+                c = False
+                break
+        if c:
+            file.write("NO")
+
+
+def solution_882():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        n, d = [int(i) for i in data[0].split()]
+        k = [int(i) for i in data[1]]
+        n = 0
+        c = True
+        while len(k) > 1 and c:
+            n += 1
+            c = False
+            for i in range(1, d + 1):
+                if len(k) > i and k[i]:
+                    c = i
+            if c:
+                c = c % len(k)
+                k = k[c:]
+        if not c:
+            file.write("-1")
+        else:
+            file.write(f"{n}")
+
+
+def solution_884():  # -
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        n, m, k = [int(i) for i in data[0].split()]
+        z = [int(i) for i in data[1].split()]
+        s = 0
+        h = [False] * m
+        # print(z)
+        for i in range(min(z), max(z) + 1):
+            h = [i in z] + h[:-1]
+            if h.count(True) >= k:
+                h[0] = False
+                s += 1
+                # print(i)
+            # print(i, h)
+        file.write(str(s))
+
+
+def solution_895():  # -
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        s = data[1]
+        for i in range(int(data[0].split()[1])):
+            a, b, c = data[i + 2].split()
+            a, b = int(a), int(b)
+            if c in s[a - 1: b]:
+                s = s[:a - 1] + s[a - 1: b].replace(c, "") + s[b:]
+                if not len(s):
+                    break
+        file.write(s)
+
+
+def solution_883():  # -
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        s = {}
+        for i in range(1, 1 + int(data[0])):
+            if data[i].split()[0] not in s.keys():
+                s[data[i].split()[0]] = []
+            s[data[i].split()[0]] += data[i].split()[2:]
+        for key in s.keys():
+            c = list(set(s[key]))
+            c = sorted(c, key=lambda x: len(x))
+            n = 0
+            while n < len(c):
+                k = [i for i in c if c[n] == i[-len(c[n]):]]
+                if len(k) > 1:
+                    c = [i for i in c if i not in k[:-1]]
+                else:
+                    n += 1
+            s[key] = c
+        file.write(str(len(s)))
+        for key, item in s.items():
+            file.write(f"\n{key} {len(item)} {' '.join(item)}")
+
+
+def solution_890():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        s = [int(i) for i in data[1].split()]
+        n = 0
+        while len(s):
+            n += 1
+            l, c, m, p = None, 0, 0, None
+            for k in range(len(s)):
+                i = s[k]
+                if l != i:
+                    c = 1
+                    l = i
+                else:
+                    c += 1
+                if c > m:
+                    m = c
+                    p = k - c + 1
+            # print(s, p, m + p)
+            # print(s[:p], s[p + m:])
+            s = s[:p] + s[p + m:]
+            # print(s)
+        # print(n)
+        file.write(f"{n}")
+
+
+def solution_891():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        m = "31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31"
+        n = data[1].replace(" ", ", ")
+        if n in m:
+            file.write("Yes")
+        else:
+            file.write("No")
+
+
+def solution_888():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        n, a, b = int(data[0]), int(data[1]), int(data[2])
+        if a <= b:
+            if n >= 2 * a + b:
+                file.write("1")
+            elif n >= 2 * a:
+                file.write("2")
+            else:
+                file.write("3")
+        else:
+            if n >= 2 * a + b:
+                file.write("1")
+            elif n >= b + a:
+                file.write("2")
+            else:
+                file.write("3")
+
+
+def solution_880():  # +
+    with open("input.txt", "r") as file:
+        data = [i.rstrip("\n") for i in file.readlines()]
+    with open("output.txt", "w") as file:
+        a = int(data[0])
+        if a % 10 < 5:
+            a -= a % 10
+        else:
+            a += 10 - a % 10
+        file.write(f"{a}")
+
+
 def solution_735():  # +
     with open("input.txt", "r") as file:
         data = [i.rstrip("\n") for i in file.readlines()]
