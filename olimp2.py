@@ -2,7 +2,7 @@ n, k = int(input()), int(input())
 s = []
 i = 1
 while len(s) < n:
-    if all([int(i) % k == 0 for i in str(i)]):
+    if all([int(u) % k == 0 for u in str(i)]):
         s.append(i)
     i += 1
 print(i - 1)
